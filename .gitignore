@@ -1,0 +1,17 @@
+# --- Python Virtual Environment ---
+venv/
+env/
+.env/
+
+# --- Local Test Media ---
+# This ignores all your test images (test.jpg, test2.png, etc.)
+test*.jpg
+test*.png
+test*.jpeg
+
+# --- System & IDE Files ---
+.vscode/
+__pycache__/
+*.py[cod]
+desktop.ini
+.DS_Store
