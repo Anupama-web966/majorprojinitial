@@ -1,5 +1,5 @@
+import requests
 import os
-
 # --- PROTOBUF FIX: Must be at the very top ---
 os.environ['PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION'] = 'python'
 
@@ -8,6 +8,9 @@ import numpy as np
 import winsound 
 
 frame_width = 1280
+# --- TELEGRAM SETTINGS ---
+BOT_TOKEN = "8424334136:AAFyp3bBumrAOwYhERdL4gYxxLXK0QZI_NY"
+CHAT_ID = "976435954"
 
 # --- 1. DYNAMIC MEDIAPIPE IMPORT ---
 try:
@@ -43,6 +46,27 @@ hands_detector = mp_hands.Hands(
 )
 
 # --- 4. UTILITY & LOGIC FUNCTIONS ---
+def send_telegram_alert():
+
+    message = """
+🚨 WOMEN SAFETY ALERT 🚨
+
+Potential emergency detected.
+
+✔ Female detected
+✔ Help gesture detected
+
+Immediate attention required.
+"""
+
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+
+    data = {
+        "chat_id": CHAT_ID,
+        "text": message
+    }
+
+    requests.post(url, data=data)
 
 def get_faces(frame):
     blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300), (104, 177.0, 123.0))
@@ -152,6 +176,7 @@ def predict_live():
                     cv2.putText(frame, "HELP ALERT!", (frame.shape[1]//3, 55), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255,255,255), 4)
                     winsound.Beep(1000, 100)
+                    send_telegram_alert()
 
         cv2.imshow('Detection System - Press Q to Quit', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
