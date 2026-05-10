@@ -6,3 +6,7 @@
 4.Install the libraries:
   pip install opencv-python numpy
   pip uninstall mediapipe
+5.voice detection:python voice_detect.py
+6.telegram bot..alert msg!-
+step 1: cd C:\Users\ANUPAMA\OneDrive\Desktop\gender-detection2\gender-detection2
+step:2 python main.py
